@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sticky_sessions/components/main_drawer.dart';
 import 'package:sticky_sessions/utils/constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -47,42 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: const EdgeInsets.only(top: 0),
-            children: [
-              const DrawerHeader(
-                child: Text(
-                  'Sticky Sessions',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                ),
-              ),
-              ListTile(
-                title: const Text(
-                  'About',
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/about');
-                },
-              ),
-              ListTile(
-                title: const Text(
-                  'Settings',
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/settings');
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: const MainDrawer(),
         body: Container(
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(40, 60, 40, 0),

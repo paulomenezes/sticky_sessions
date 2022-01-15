@@ -81,8 +81,7 @@ class _LoginTokenScreenState extends State<LoginTokenScreen> {
                           setState(() {
                             isLoading = true;
 
-                            Timer(const Duration(seconds: 2),
-                                () => Navigator.of(context).pushNamedAndRemoveUntil(routerHome, (Route<dynamic> route) => false));
+                            Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, routerHome, (route) => false));
                           });
                         }
                       : null,
