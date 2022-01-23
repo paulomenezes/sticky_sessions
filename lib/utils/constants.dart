@@ -7,3 +7,4 @@ const String routerLogin = '/login';
 const String routerLoginToken = '/login/token';
 const String routerHome = '/home';
 const String routerNotification = '/notification';
+const String routerRetrospective = '/retrospective';
