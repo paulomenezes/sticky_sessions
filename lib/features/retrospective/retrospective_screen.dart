@@ -24,7 +24,9 @@ class _RetrospectiveScreenState extends State<RetrospectiveScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed('/session/add');
+          },
           child: const Icon(Icons.add),
         ),
         body: Container(
