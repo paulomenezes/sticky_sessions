@@ -4,6 +4,7 @@ import 'package:sticky_sessions/features/login/login_screen.dart';
 import 'package:sticky_sessions/features/login/login_token_screen.dart';
 import 'package:sticky_sessions/features/notification/notification_screen.dart';
 import 'package:sticky_sessions/features/retrospective/retrospective_screen.dart';
+import 'package:sticky_sessions/features/session/session_screen.dart';
 import 'package:sticky_sessions/features/splash/splash_screen.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/notification': (context) => const NotificationScreen(),
         '/retrospective': (context) => const RetrospectiveScreen(),
+        '/session': (context) => const SessionScreen(),
       },
       initialRoute: '/',
     );
