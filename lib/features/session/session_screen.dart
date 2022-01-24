@@ -60,7 +60,11 @@ class _SessionScreenState extends State<SessionScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        ElevatedButton(onPressed: () {}, child: const Text("+ NEW NOTE")),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(routerSessionAddNote);
+                            },
+                            child: const Text("+ NEW NOTE")),
                         const SizedBox(
                           height: 16,
                         ),

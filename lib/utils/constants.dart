@@ -10,3 +10,4 @@ const String routerNotification = '/notification';
 const String routerRetrospective = '/retrospective';
 const String routerSession = '/session';
 const String routerSessionAdd = '/session/add';
+const String routerSessionAddNote = '/session/add-note';
