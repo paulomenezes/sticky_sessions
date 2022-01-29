@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sticky_sessions/components/icon_row.dart';
+import 'package:sticky_sessions/models/meeting.dart';
 import 'package:sticky_sessions/utils/constants.dart';
 
 class MeetingCard extends StatefulWidget {
   final bool isRecent;
+  final Meeting meeting;
 
-  const MeetingCard({Key? key, required this.isRecent}) : super(key: key);
+  const MeetingCard({Key? key, required this.isRecent, required this.meeting}) : super(key: key);
 
   @override
   State<MeetingCard> createState() => _MeetingCardState();
@@ -16,7 +18,7 @@ class _MeetingCardState extends State<MeetingCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, routerRetrospective);
+          Navigator.of(context).pushNamed(routerRetrospective, arguments: widget.meeting);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -41,20 +43,20 @@ class _MeetingCardState extends State<MeetingCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Retrospective",
+                  Text(widget.meeting.title ?? "",
                       style: TextStyle(color: widget.isRecent ? Colors.white : Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
                   const SizedBox(height: 8),
-                  Text("Sala 01 (Cesar Apolo) • 21/03 12:30",
+                  Text("${widget.meeting.local} • ${widget.meeting.startDate}",
                       style: TextStyle(
                         color: widget.isRecent ? Colors.white : Colors.black,
                       )),
                   const SizedBox(height: 8),
-                  const Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque consequat ut lorem quis consectetur.",
-                      style: TextStyle(
+                  Text(widget.meeting.description ?? "",
+                      style: const TextStyle(
                         color: Colors.grey,
                       )),
                   const SizedBox(height: 8),
-                  IconRow(isRecent: widget.isRecent, icon: Icons.message, text: "3 sessions"),
+                  IconRow(isRecent: widget.isRecent, icon: Icons.message, text: "${widget.meeting.sessions} sessions"),
                   const SizedBox(height: 8),
                   IconRow(isRecent: widget.isRecent, icon: Icons.people, text: "8 participants"),
                 ],

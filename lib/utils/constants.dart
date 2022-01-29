@@ -11,3 +11,5 @@ const String routerRetrospective = '/retrospective';
 const String routerSession = '/session';
 const String routerSessionAdd = '/session/add';
 const String routerSessionAddNote = '/session/add-note';
+
+const String baseUri = 'https://study-web-app.herokuapp.com';

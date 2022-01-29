@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sticky_sessions/core/auth/blocs/auth_bloc.dart';
 import 'package:sticky_sessions/utils/constants.dart';
 
 class MainDrawer extends StatefulWidget {
-  const MainDrawer({Key? key}) : super(key: key);
+  final AuthBloc authBloc;
+
+  const MainDrawer({Key? key, required this.authBloc}) : super(key: key);
 
   @override
   State<MainDrawer> createState() => _MainDrawerState();
@@ -109,7 +112,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ],
             ),
             onTap: () {
-              Navigator.pushNamedAndRemoveUntil(context, routerLogin, (route) => false);
+              widget.authBloc.logout();
             },
           ),
           const ListTile(

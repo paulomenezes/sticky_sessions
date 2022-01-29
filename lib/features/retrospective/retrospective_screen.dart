@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sticky_sessions/components/icon_row.dart';
+import 'package:sticky_sessions/features/retrospective/blocs/retrospective_bloc.dart';
+import 'package:sticky_sessions/features/retrospective/model/retrospective_model.dart';
+import 'package:sticky_sessions/models/meeting.dart';
 import 'package:sticky_sessions/utils/constants.dart';
 
 class RetrospectiveScreen extends StatefulWidget {
@@ -12,6 +15,21 @@ class RetrospectiveScreen extends StatefulWidget {
 }
 
 class _RetrospectiveScreenState extends State<RetrospectiveScreen> {
+  late RetrospectiveBloc _retrospectiveBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _retrospectiveBloc = RetrospectiveBloc();
+
+    Future.delayed(Duration.zero, () {
+      final meeting = ModalRoute.of(context)!.settings.arguments as Meeting;
+
+      _retrospectiveBloc.onInit(meeting.id ?? "");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,59 +47,69 @@ class _RetrospectiveScreenState extends State<RetrospectiveScreen> {
           },
           child: const Icon(Icons.add),
         ),
-        body: Container(
-          color: const Color(0xFFF3F3F3),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ListView.builder(
-              itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/session');
-                  },
-                  child: Container(
+        body: StreamBuilder<RetrospectiveModel>(
+            stream: _retrospectiveBloc.stream,
+            initialData: RetrospectiveModel(),
+            builder: (context, state) => state.data?.isLoading == true
+                ? Container(
                     color: Colors.white,
-                    margin: const EdgeInsets.only(top: 24),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 6,
-                          height: 135,
-                          color: const Color(0xFF8844A4),
-                        ),
-                        Container(
-                            width: MediaQuery.of(context).size.width - 10,
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    Text("Starfish", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                    Icon(Icons.more_vert)
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                const Text(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque consequat ut lorem quis consectetur.",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                    )),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                const IconRow(isRecent: false, icon: Icons.message, text: "6 responses"),
-                              ],
-                            ))
-                      ],
-                    ),
-                  )),
-              itemCount: 3,
-              shrinkWrap: true,
-            ),
-          ]),
-        ));
+                    child: const Center(
+                        child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    )))
+                : Container(
+                    color: const Color(0xFFF3F3F3),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                      ListView.builder(
+                        itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/session', arguments: state.data?.sessions[index]);
+                            },
+                            child: Container(
+                              color: Colors.white,
+                              margin: const EdgeInsets.only(top: 24),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 6,
+                                    height: 135,
+                                    color: const Color(0xFF8844A4),
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width - 10,
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(state.data?.sessions[index].name ?? "",
+                                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                              const Icon(Icons.more_vert)
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(state.data?.sessions[index].description ?? "",
+                                              maxLines: 2,
+                                              style: const TextStyle(
+                                                color: Colors.grey,
+                                              )),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          IconRow(isRecent: false, icon: Icons.message, text: "${state.data?.sessions[index].answer ?? 0} responses"),
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            )),
+                        itemCount: state.data?.sessions.length ?? 0,
+                        shrinkWrap: true,
+                      ),
+                    ]),
+                  )));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sticky_sessions/core/auth/blocs/auth_bloc.dart';
 import 'package:sticky_sessions/features/home/home_screen.dart';
 import 'package:sticky_sessions/features/login/login_screen.dart';
 import 'package:sticky_sessions/features/login/login_token_screen.dart';
@@ -10,11 +11,13 @@ import 'package:sticky_sessions/features/session/session_screen.dart';
 import 'package:sticky_sessions/features/splash/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final AuthBloc authBloc = AuthBloc();
+
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
       ),
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/': (context) => SplashScreen(
+              authBloc: authBloc,
+            ),
         '/login': (context) => const LoginScreen(),
         '/login/token': (context) => const LoginTokenScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => HomeScreen(
+              authBloc: authBloc,
+            ),
         '/notification': (context) => const NotificationScreen(),
         '/retrospective': (context) => const RetrospectiveScreen(),
         '/session': (context) => const SessionScreen(),
