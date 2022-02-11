@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:sticky_sessions/core/database/database_service.dart';
 import 'package:sticky_sessions/core/utils/bloc.dart';
 import 'package:sticky_sessions/features/login/usecase/do_login.dart';
 import 'package:sticky_sessions/features/login/model/login_model.dart';
@@ -15,6 +16,8 @@ class LoginBloc extends Bloc<LoginModel> {
 
     model.isLoading = false;
     model.isLogged = result;
+
+    DatabaseService().insert('users', {'name': username});
 
     emit();
   }

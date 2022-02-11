@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:sticky_sessions/models/column.dart' as session_column;
 
 class Session {
@@ -21,7 +23,8 @@ class Session {
 
     if (json['columns'] != null) {
       columns = <session_column.Column>[];
-      json['columns'].forEach((v) {
+
+      (json['columns'] is String ? jsonDecode(json['columns']) : json['columns']).forEach((v) {
         columns!.add(session_column.Column.fromJson(v));
       });
     }
@@ -37,7 +40,7 @@ class Session {
     data['answer'] = answer;
 
     if (columns != null) {
-      data['columns'] = columns!.map((v) => v.toJson()).toList();
+      data['columns'] = jsonEncode(columns!.map((v) => v.toJson()).toList());
     }
 
     return data;

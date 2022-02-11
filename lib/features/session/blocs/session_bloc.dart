@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:sticky_sessions/core/database/database_service.dart';
 import 'package:sticky_sessions/core/utils/bloc.dart';
+import 'package:sticky_sessions/core/utils/network.dart';
 import 'package:sticky_sessions/features/session/model/session_model.dart';
 import 'package:sticky_sessions/features/session/usecase/on_init.dart';
 import 'package:sticky_sessions/models/session.dart';
@@ -13,7 +15,13 @@ class SessionBloc extends Bloc<SessionModel> {
     model.isLoading = true;
     emit();
 
-    List<Sticky>? stickies = await OnInit().execute([session.meetingId ?? "", session.id ?? ""]);
+    List<Sticky>? stickies = [];
+
+    if (await hasNetwork()) {
+      stickies = await OnInit().execute([session.meetingId ?? "", session.id ?? ""]);
+    } else {
+      stickies = (await DatabaseService().list('stickies'))?.map((e) => Sticky.fromJson(e)).toList() ?? [];
+    }
 
     model.isLoading = false;
     model.session = session;
@@ -25,6 +33,10 @@ class SessionBloc extends Bloc<SessionModel> {
       } else {
         model.stickyByColumnMap[sticky.columnName ?? ""] = [sticky];
       }
+    }
+
+    for (var sticky in model.stickies) {
+      DatabaseService().insert('stickies', sticky.toJson());
     }
 
     emit();
