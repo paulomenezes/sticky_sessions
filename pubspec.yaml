@@ -38,6 +38,9 @@ dependencies:
   http: ^0.13.4
   sqflite:
   path:
+  flutter_localizations: # Add this line
+    sdk: flutter         # Add this line
+  intl: ^0.17.0 # Add this line
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +58,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  generate: true # Add this line
+
   assets:
     - assets/app-icon.png
     - assets/profile.png

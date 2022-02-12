@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sticky_sessions/core/auth/blocs/auth_bloc.dart';
 import 'package:sticky_sessions/utils/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainDrawer extends StatefulWidget {
   final AuthBloc authBloc;
@@ -42,17 +43,17 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
           ListTile(
             title: Row(
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.coffee,
                   color: primaryColor,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Text(
-                  'Meetings',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor),
+                  AppLocalizations.of(context)!.meetings,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: primaryColor),
                 )
               ],
             ),
@@ -62,17 +63,17 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
           ListTile(
             title: Row(
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.info,
                   color: Colors.grey,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Text(
-                  'About',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                  AppLocalizations.of(context)!.about,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
                 )
               ],
             ),
@@ -82,14 +83,14 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
           ListTile(
             title: Row(
-              children: const [
-                Icon(Icons.settings, color: Colors.grey),
-                SizedBox(
+              children: [
+                const Icon(Icons.settings, color: Colors.grey),
+                const SizedBox(
                   width: 8,
                 ),
                 Text(
-                  'Settings',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                  AppLocalizations.of(context)!.settings,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
                 )
               ],
             ),
@@ -100,14 +101,14 @@ class _MainDrawerState extends State<MainDrawer> {
           const Spacer(),
           ListTile(
             title: Row(
-              children: const [
-                Icon(Icons.logout, color: primaryColor),
-                SizedBox(
+              children: [
+                const Icon(Icons.logout, color: primaryColor),
+                const SizedBox(
                   width: 8,
                 ),
                 Text(
-                  'Logout',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor),
+                  AppLocalizations.of(context)!.logout,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: primaryColor),
                 )
               ],
             ),
